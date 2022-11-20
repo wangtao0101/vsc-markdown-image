@@ -1,20 +1,17 @@
 {
-  "name": "markdown-image",
-  "displayName": "Markdown Image",
-  "description": "Easy to insert a image to markdown",
-  "version": "1.1.22",
-  "publisher": "hancel",
+  "name": "markdown-sync-image",
+  "displayName": "Markdown Sync Image",
+  "description": "Easy to insert a image to markdown or sync images of commercial markdowns to local",
+  "version": "0.1.0",
+  "publisher": "wangtao0101",
   "engines": {
     "vscode": "^1.33.0"
   },
   "keywords": [
     "Picture",
-    "cdn",
-    "markdown",
-    "imgur",
-    "七牛",
-    "sm.ms",
-    "helper"
+    "Markdown",
+    "Local",
+    "Sync"
   ],
   "icon": "asserts/icon.png",
   "license": "MIT",
@@ -22,33 +19,38 @@
     "Other"
   ],
   "activationEvents": [
-    "onCommand:markdown-image.paste",
-    "onCommand:markdown-image.config",
-    "onCommand:markdown-image.paste-rich-text"
+    "onCommand:markdown-sync-image.paste",
+    "onCommand:markdown-sync-image.config",
+    "onCommand:markdown-sync-image.paste-rich-text"
   ],
-  "repository": "https://github.com/imlinhanchao/vsc-markdown-image",
+  "repository": "https://github.com/wangtao0101/vsc-markdown-sync-image",
   "main": "./out/extension",
   "contributes": {
     "commands": [
       {
-        "command": "markdown-image.paste",
-        "category": "Markdown Image",
-        "title": "%markdown-image.command.paste%"
+        "command": "markdown-sync-image.paste",
+        "category": "Markdown Sync Image",
+        "title": "Markdown Sync Image: Paste Image"
       },
       {
-        "command": "markdown-image.config",
-        "category": "Markdown Image",
-        "title": "%markdown-image.command.config%"
+        "command": "markdown-sync-image.config",
+        "category": "Markdown Sync Image",
+        "title": "Markdown Sync Image: Config"
       },
       {
-        "command": "markdown-image.paste-rich-text",
-        "category": "Markdown Image",
-        "title": "%markdown-image.command.paste-rich-text%"
+        "command": "markdown-sync-image.paste-rich-text",
+        "category": "Markdown Sync Image",
+        "title": "Markdown Sync Image: Paste Rich Text"
+      },
+      {
+        "command": "markdown-sync-image.paste-markdown",
+        "category": "Markdown Sync Image",
+        "title": "Markdown Sync Image: Paste Markdown"
       }
     ],
     "keybindings": [
       {
-        "command": "markdown-image.paste",
+        "command": "markdown-sync-image.paste",
         "key": "alt+shift+v",
         "mac": "alt+shift+v",
         "when": "editorLangId == markdown || editorLangId == mdx || resourceExtname == .ipynb"
@@ -57,12 +59,12 @@
     "menus": {
       "editor/context": [
         {
-          "command": "markdown-image.paste",
+          "command": "markdown-sync-image.paste",
           "when": "editorLangId == markdown || editorLangId == mdx || resourceExtname == .ipynb",
           "group": "9_cutcopypaste@4"
         },
         {
-          "command": "markdown-image.paste-rich-text",
+          "command": "markdown-sync-image.paste-rich-text",
           "when": "editorLangId == markdown || editorLangId == mdx || resourceExtname == .ipynb",
           "group": "9_cutcopypaste@5"
         }
@@ -70,193 +72,46 @@
     },
     "configuration": {
       "type": "object",
-      "title": "%markdown-image.title%",
+      "title": "%markdown-sync-image.title%",
       "properties": {
-        "markdown-image.base.uploadMethod": {
-          "type": "string",
-          "enum": [
-            "Local",
-            "Coding",
-            "GitHub",
-            "Imgur",
-            "SM.MS",
-            "Data URL",
-            "%markdown-image.qiniu%",
-            "%markdown-image.DIY%",
-            "Cloudinary"
-          ],
-          "default": "Local",
-          "markdownDescription": "%markdown-image.base.uploadMethod%",
-          "enumDescriptions": [
-            "%markdown-image.base.uploadMethod.Local%",
-            "%markdown-image.base.uploadMethod.Coding%",
-            "%markdown-image.base.uploadMethod.GitHub%",
-            "%markdown-image.base.uploadMethod.Imgur%",
-            "%markdown-image.base.uploadMethod.SM.MS%",
-            "%markdown-image.base.uploadMethod.DataURL%",
-            "%markdown-image.base.uploadMethod.Qiniu%",
-            "%markdown-image.base.uploadMethod.DIY%",
-            "%markdown-image.base.uploadMethod.Cloudinary%"
-          ]
-        },
-        "markdown-image.base.codeType": {
+        "markdown-sync-image.base.codeType": {
           "type": "string",
           "enum": [
             "Markdown",
             "HTML"
           ],
           "default": "Markdown",
-          "markdownDescription": "%markdown-image.base.codeType%",
+          "markdownDescription": "%markdown-sync-image.base.codeType%",
           "enumDescriptions": [
-            "%markdown-image.base.codeType.Markdown%",
-            "%markdown-image.base.codeType.HTML%"
+            "%markdown-sync-image.base.codeType.Markdown%",
+            "%markdown-sync-image.base.codeType.HTML%"
           ]
         },
-        "markdown-image.base.imageWidth": {
+        "markdown-sync-image.base.imageWidth": {
           "type": "number",
           "default": 0,
-          "markdownDescription": "%markdown-image.base.imageWidth%"
+          "markdownDescription": "%markdown-sync-image.base.imageWidth%"
         },
-        "markdown-image.base.fileNameFormat": {
+        "markdown-sync-image.base.fileNameFormat": {
           "type": "string",
           "default": "${hash}",
           "pattern": "^[^:*?<>|]+$",
-          "markdownDescription": "%markdown-image.base.fileNameFormat%"
+          "markdownDescription": "%markdown-sync-image.base.fileNameFormat%"
         },
-        "markdown-image.base.urlEncode": {
+        "markdown-sync-image.base.urlEncode": {
           "type": "boolean",
           "default": true,
-          "markdownDescription": "%markdown-image.base.urlEncode%"
+          "markdownDescription": "%markdown-sync-image.base.urlEncode%"
         },
-        "markdown-image.local.path": {
+        "markdown-sync-image.local.path": {
           "type": "string",
           "default": "/images",
-          "markdownDescription": "%markdown-image.local.path%"
+          "markdownDescription": "%markdown-sync-image.local.path%"
         },
-        "markdown-image.local.referencePath": {
+        "markdown-sync-image.local.referencePath": {
           "type": "string",
           "default": "",
-          "markdownDescription": "%markdown-image.local.referencePath%"
-        },
-        "markdown-image.coding.path": {
-          "type": "string",
-          "default": "/",
-          "markdownDescription": "%markdown-image.coding.path%"
-        },
-        "markdown-image.coding.token": {
-          "type": "string",
-          "default": "",
-          "markdownDescription": "%markdown-image.coding.token%"
-        },
-        "markdown-image.coding.repository": {
-          "type": "string",
-          "default": "",
-          "pattern": "^(https://([^.]*?).coding.net/p/([^/]*?)/(d/([^/]*?)/(git|)|)|)$",
-          "markdownDescription": "%markdown-image.coding.repository%"
-        },
-        "markdown-image.github.path": {
-          "type": "string",
-          "default": "/",
-          "markdownDescription": "%markdown-image.github.path%"
-        },
-        "markdown-image.github.token": {
-          "type": "string",
-          "default": "",
-          "markdownDescription": "%markdown-image.github.token%"
-        },
-        "markdown-image.github.repository": {
-          "type": "string",
-          "default": "",
-          "pattern": "^(https://github.com/[^/]*?/[^/]*?/*|)$",
-          "markdownDescription": "%markdown-image.github.repository%"
-        },
-        "markdown-image.github.branch": {
-          "type": "string",
-          "default": "master",
-          "markdownDescription": "%markdown-image.github.branch%"
-        },
-        "markdown-image.imgur.clientId": {
-          "type": "string",
-          "default": "",
-          "markdownDescription": "%markdown-image.imgur.clientId%"
-        },
-        "markdown-image.imgur.httpProxy": {
-          "type": "string",
-          "default": "",
-          "markdownDescription": "%markdown-image.imgur.httpProxy%"
-        },
-        "markdown-image.sm_ms.token": {
-          "type": "string",
-          "default": "",
-          "markdownDescription": "%markdown-image.sm_ms.token%"
-        },
-        "markdown-image.qiniu.accessKey": {
-          "type": "string",
-          "default": "",
-          "markdownDescription": "%markdown-image.qiniu.accessKey%"
-        },
-        "markdown-image.qiniu.secretKey": {
-          "type": "string",
-          "default": "",
-          "markdownDescription": "%markdown-image.qiniu.secretKey%"
-        },
-        "markdown-image.qiniu.bucket": {
-          "type": "string",
-          "default": "",
-          "markdownDescription": "%markdown-image.qiniu.bucket%"
-        },
-        "markdown-image.qiniu.domain": {
-          "type": "string",
-          "default": "",
-          "pattern": "^(http(s|)://[a-zA-Z0-9][-\\w]{0,62}(.[a-zA-Z0-9][-\\w]{0,62})+.|)?",
-          "markdownDescription": "%markdown-image.qiniu.domain%"
-        },
-        "markdown-image.qiniu.zone": {
-          "type": "string",
-          "enum": [
-            "%markdown-image.qiniu.east%",
-            "%markdown-image.qiniu.north%",
-            "%markdown-image.qiniu.south%",
-            "%markdown-image.qiniu.na%",
-            "%markdown-image.qiniu.sa%"
-          ],
-          "default": "East China",
-          "markdownDescription": "%markdown-image.qiniu.zone%"
-        },
-        "markdown-image.DIY.path": {
-          "type": "string",
-          "default": "",
-          "markdownDescription": "%markdown-image.DIY.path%"
-        },
-        "markdown-image.cloudinary.cloudName": {
-          "type": "string",
-          "default": "",
-          "markdownDescription": "%markdown-image.cloudinary.cloudName%"
-        },
-        "markdown-image.cloudinary.apiKey": {
-          "type": "string",
-          "default": "",
-          "markdownDescription": "%markdown-image.cloudinary.apiKey%"
-        },
-        "markdown-image.cloudinary.apiSecret": {
-          "type": "string",
-          "default": "",
-          "markdownDescription": "%markdown-image.cloudinary.apiSecret%"
-        },
-        "markdown-image.cloudinary.folder": {
-          "type": "string",
-          "default": "",
-          "markdownDescription": "%markdown-image.cloudinary.folder%"
-        },
-        "markdown-image.cloudflare.accountId": {
-          "type": "string",
-          "default": "",
-          "markdownDescription": "%markdown-image.cloudflare.accountId%"
-        },
-        "markdown-image.cloudflare.apiToken": {
-          "type": "string",
-          "default": "",
-          "markdownDescription": "%markdown-image.cloudflare.apiToken%"
+          "markdownDescription": "%markdown-sync-image.local.referencePath%"
         }
       }
     }

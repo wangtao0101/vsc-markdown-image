@@ -13,14 +13,14 @@ export function activate(context: vscode.ExtensionContext) {
     let index = 1;
     // Use the console to output diagnostic information (console.debug) and errors (console.error)
     // This line of code will only be executed once when your extension is activated
-    console.info('Congratulations, your extension "markdown-image" is now active!');
+    console.info('Congratulations, your extension "markdown-sync-image" is now active!');
     let config = utils.getConfig();
     let upload : Upload | null = utils.getUpload(config);
 
     // The command has been defined in the package.json file
     // Now provide the implementation of the command with  registerCommand
     // The commandId parameter must match the command field in package.json
-    let pasteCommand = vscode.commands.registerCommand('markdown-image.paste', async () => {
+    let pasteCommand = vscode.commands.registerCommand('markdown-sync-image.paste', async () => {
         let stop = () => {};
         try {
             stop = utils.showProgress($l['uploading']);
@@ -100,13 +100,13 @@ export function activate(context: vscode.ExtensionContext) {
 
     context.subscriptions.push(pasteCommand);
 
-    let configCommand = vscode.commands.registerCommand('markdown-image.config', () => {
-        vscode.commands.executeCommand('workbench.action.openSettings', 'markdown-image' );
+    let configCommand = vscode.commands.registerCommand('markdown-sync-image.config', () => {
+        vscode.commands.executeCommand('workbench.action.openSettings', 'markdown-sync-image' );
     });
 
     context.subscriptions.push(configCommand);
 
-    let richTextCommand = vscode.commands.registerCommand('markdown-image.paste-rich-text', async () => {
+    let richTextCommand = vscode.commands.registerCommand('markdown-sync-image.paste-rich-text', async () => {
         let stop = () => {};
         try {
             let editor = vscode.window.activeTextEditor;

@@ -14,23 +14,24 @@ let pkg = packages as any;
 let locale = i18n();
 
 function getUpload(config: Config) : Upload | null {
-    switch(config.base.uploadMethod) {
-        case 'Local': return new Uploads.Local(config);
-        case 'Coding': return new Uploads.Coding(config);
-        case 'GitHub': return new Uploads.GitHub(config);
-        case 'Imgur': return new Uploads.Imgur(config);
-        case 'SM.MS': return new Uploads.SM_MS(config);
-        case 'Data URL': return new Uploads.DataUrl(config);
-        case 'Qiniu': return new Uploads.Qiniu(config);
-        case 'DIY': return new Uploads.Define(config);
-        case '本地': return new Uploads.Local(config);
-        case '七牛': return new Uploads.Qiniu(config);
-        case '自定义': return new Uploads.Define(config);
-        case '自定義': return new Uploads.Define(config);
-        case 'Cloudinary': return new Uploads.Cloudinary(config);
-        case 'Cloudflare': return new Uploads.Cloudflare(config);
-    }
-    return null;
+    return new Uploads.Local(config);
+    // switch(config.base.uploadMethod) {
+    //     case 'Local': return new Uploads.Local(config);
+    //     case 'Coding': return new Uploads.Coding(config);
+    //     case 'GitHub': return new Uploads.GitHub(config);
+    //     case 'Imgur': return new Uploads.Imgur(config);
+    //     case 'SM.MS': return new Uploads.SM_MS(config);
+    //     case 'Data URL': return new Uploads.DataUrl(config);
+    //     case 'Qiniu': return new Uploads.Qiniu(config);
+    //     case 'DIY': return new Uploads.Define(config);
+    //     case '本地': return new Uploads.Local(config);
+    //     case '七牛': return new Uploads.Qiniu(config);
+    //     case '自定义': return new Uploads.Define(config);
+    //     case '自定義': return new Uploads.Define(config);
+    //     case 'Cloudinary': return new Uploads.Cloudinary(config);
+    //     case 'Cloudflare': return new Uploads.Cloudflare(config);
+    // }
+    // return null;
 }
 
 function showProgress(message: string) {
