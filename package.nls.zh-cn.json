@@ -23,7 +23,7 @@
     "markdown-sync-image.base.codeType.Markdown": "Markdown 代码，比如：![image](./image/file/path.jpg)",
     "markdown-sync-image.base.codeType.HTML": "HTML 代码，比如：<img alt=\"image\" src=\"./image/file/path.jpg\" />",
     "markdown-sync-image.base.imageWidth": "图片的最大宽度，若图片大于这个宽度，则会设置宽度为该值。设置为 0 则表示不设置。",
-    "markdown-sync-image.local.path": "本地的图片存储目录（如果不存在，则自动创建）。支持相对路径，相对于所粘贴的 Markdown 文件。 `/` 表示打开的文件夹根目录。注意：您不能在此处使用变量。您可以在 `#markdown-sync-image.base.fileNameFormat#` 中使用变量。",
+    "markdown-sync-image.local.path": "本地的图片存储目录（如果不存在，则自动创建）。支持相对路径，相对于所粘贴的 Markdown 文件。 `/` 表示打开的文件夹根目录。你有一些变量可以使用：  \n\n-`${mdname}`: 正在编辑的 Markdown 文件的名称（不含扩展名）。  \n- `${path}`: 正在编辑的 Markdown 文件相对于根目录的路径。",
     "markdown-sync-image.local.referencePath": "Markdown 中的图片的引用路径格式（不包含文件名）。留空表示使用相对路径。 你可以使用 `#markdown-sync-image.base.fileNameFormat#` 中的所有变量。例如：`/images/${YY}-${MM}/`",
     "markdown-sync-image.coding.path": "仓库中的图片保存目录（如果不存在，则自动创建）。",
     "markdown-sync-image.coding.token": "Coding 的个人[访问令牌](https://help.coding.net/docs/member/tokens.html)，用于访问仓库，上传图片。",

@@ -25,7 +25,7 @@
   "markdown-sync-image.base.codeType.Markdown": "Markdown Code as: ![image](./image/file/path.jpg)",
   "markdown-sync-image.base.codeType.HTML": "HTML Code as: <img alt=\"image\" src=\"./image/file/path.jpg\" />",
   "markdown-sync-image.base.imageWidth": "The maximum width of the image, if the image is greater than this width, the width is set to this value. Set to 0 means not change.",
-  "markdown-sync-image.local.path": "Picture storage directory that in the local (automatically created if it does not exist). Notice: You can't use variable in here. You can use variable in `#markdown-sync-image.base.fileNameFormat#`.",
+  "markdown-sync-image.local.path": "Picture storage directory that in the local (automatically created if it does not exist). Notice: You can use some variable: \n\n- `${mdname}`: The name of the Markdown file being edited.  \n- `${path}`: The path of the Markdown file being edited relative to the root directory.`.",
   "markdown-sync-image.local.referencePath": "The reference path format in markdown(not include file name). Empty means use relative path. You can use variable of `#markdown-sync-image.base.fileNameFormat#` in here. For example: `/images/${YY}-${MM}/`",
   "markdown-sync-image.coding.path": "Picture upload directory that in the repository (automatically created if it does not exist). The repository must initialization first.",
   "markdown-sync-image.coding.token": "Coding person [access token](https://help.coding.net/docs/member/tokens.html).",

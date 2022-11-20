@@ -95,6 +95,31 @@ function formatCode(filePath: string, selection: string, maxWidth: number, codeT
     return `<img alt="${selection}" src="${filePath}" ${maxWidth > 0 ? `width="${maxWidth}" ` : ''}/>  \n`;
 }
 
+async function formatPath(format: string): Promise<string> {
+    let saveName = format;
+    let variables = [
+        'mdname', 'path'
+    ];
+    for (let i = 0; i < variables.length; i++) {
+        let reg = new RegExp(`\\$\\{${variables[i]}\\}`, 'g');
+        let mat = format.match(reg);
+        if (!mat) { continue; }
+        switch(variables[i]) {
+            case 'mdname': {
+                let data = path.basename(getCurrentFilePath(), path.extname(getCurrentFilePath()));
+                saveName = saveName.replace(reg, data);
+                break;
+            }
+            case 'path': {
+                let data = path.dirname(getCurrentFilePath()).replace(getCurrentRoot(), '').slice(1);
+                saveName = saveName.replace(reg, data);
+                break;
+            }
+        }
+    }
+    return saveName;
+}
+
 async function formatName(format: string, filePath: string, isPaste: boolean): Promise<string> {
     let saveName = format;
     let variables = [
@@ -510,5 +535,6 @@ export default {
     confirm,
     prompt,
     hash,
+    formatPath,
 };
 export { locale };
