@@ -6,6 +6,7 @@ import * as path from 'path';
 import utils from './lib/utils';
 import { locale as $l } from './lib/utils';
 import { imageSize } from 'image-size';
+import { copyMarkdown } from './lib/copyMarkdown';
 
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
@@ -124,6 +125,24 @@ export function activate(context: vscode.ExtensionContext) {
     });
 
     context.subscriptions.push(richTextCommand);
+
+    let copyMarkdownCommand = vscode.commands.registerCommand('markdown-sync-image.paste-markdown', async () => {
+        let stop = () => {};
+        try {
+            let editor = vscode.window.activeTextEditor;
+            const text = await copyMarkdown()
+            if(text) {
+                utils.editorEdit(editor?.selection, text);
+            }
+        } catch (error) {
+            let e = error as Error;
+            vscode.window.showErrorMessage(`${$l['something_wrong']}${e.message}\n${e.toString()}`);
+        }
+
+        stop(); 
+    });
+
+    context.subscriptions.push(copyMarkdownCommand);
 
     vscode.workspace.onDidChangeConfiguration(function(event) {
         config = utils.getConfig();

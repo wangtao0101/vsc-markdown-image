@@ -21,6 +21,7 @@
   "activationEvents": [
     "onCommand:markdown-sync-image.paste",
     "onCommand:markdown-sync-image.config",
+    "onCommand:markdown-sync-image.paste-markdown",
     "onCommand:markdown-sync-image.paste-rich-text"
   ],
   "repository": "https://github.com/wangtao0101/vsc-markdown-sync-image",
@@ -64,9 +65,14 @@
           "group": "9_cutcopypaste@4"
         },
         {
-          "command": "markdown-sync-image.paste-rich-text",
+          "command": "markdown-sync-image.paste-markdown",
           "when": "editorLangId == markdown || editorLangId == mdx || resourceExtname == .ipynb",
           "group": "9_cutcopypaste@5"
+        },
+        {
+          "command": "markdown-sync-image.paste-rich-text",
+          "when": "editorLangId == markdown || editorLangId == mdx || resourceExtname == .ipynb",
+          "group": "9_cutcopypaste@6"
         }
       ]
     },
