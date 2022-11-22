@@ -2,7 +2,7 @@
   "name": "markdown-sync-image",
   "displayName": "Markdown Sync Image",
   "description": "Easy to insert a image to markdown or sync images of commercial markdowns to local",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "publisher": "wangtao0101",
   "engines": {
     "vscode": "^1.33.0"
@@ -147,7 +147,6 @@
     "https-proxy-agent": "^4.0.0",
     "image-size": "^1.0.0",
     "node-fetch": "^2.6.6",
-    "qiniu": "^7.3.1",
     "turndown": "^7.0.0",
     "turndown-plugin-gfm": "^1.0.2",
     "vscode-nls": "^4.1.2"
