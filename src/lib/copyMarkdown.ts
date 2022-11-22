@@ -12,6 +12,10 @@ interface MarkdownImage {
   savePath: string;
 }
 
+function getImageReg() {
+  return /\!\[(.*)\]\((.*)\)/g;
+}
+
 async function downloadImage(url: string, filepath: string) {
   return new Promise((resolve, reject) => {
     https.get(url, (res) => {
@@ -36,8 +40,48 @@ async function downloadImage(url: string, filepath: string) {
   });
 }
 
-function getImageReg() {
-  return /\!\[(.*)\]\((.*)\)/g;
+async function handleImage(
+  originUrl: string,
+  name: string,
+  markdownImages: MarkdownImage[],
+  config: Config,
+  upload: Upload
+) {
+  if (originUrl.startsWith("https://")) {
+    const extReg = /https:\/\/.*\.(jpg|jpeg|gif|bmp|png|webp)/;
+    const extRes = extReg.exec(originUrl);
+    let savePath = utils.getTmpFolder();
+    savePath = path.resolve(
+      savePath,
+      `pic_${new Date().getTime()}.${extRes != null ? extRes[1] : "png"}`
+    );
+    try {
+      console.log(savePath);
+      await downloadImage(originUrl, savePath);
+      console.log("asdfasdf");
+      const fileName = config.base.fileNameFormat
+        ? (await utils.formatName(
+            config.base.fileNameFormat,
+            savePath,
+            false
+          )) + path.extname(savePath)
+        : savePath;
+
+      console.debug(`Uploading ${originUrl}: ${savePath} to ${fileName}.`);
+      const localPath = await upload?.upload(savePath, fileName);
+
+      if (localPath != null) {
+        markdownImages.push({
+          name,
+          originUrl,
+          savePath,
+          localPath,
+        });
+      }
+    } catch (error) {
+      vscode.window.showErrorMessage(`Download ${originUrl} failed`);
+    }
+  }
 }
 
 export async function copyMarkdown() {
@@ -54,45 +98,14 @@ export async function copyMarkdown() {
   const items = clipboard_content.matchAll(getImageReg());
 
   const markdownImages: MarkdownImage[] = [];
-
+  const allTasks: any[] = [];
   for (const item of items) {
-    const originUrl = item[2];
-    if (originUrl.startsWith("https://")) {
-      const extReg = /https:\/\/.*\.(jpg|jpeg|gif|bmp|png|webp)/;
-      const extRes = extReg.exec(originUrl);
-      let savePath = utils.getTmpFolder();
-      savePath = path.resolve(
-        savePath,
-        `pic_${new Date().getTime()}.${extRes != null ? extRes[1] : "png"}`
-      );
-      try {
-        console.log(savePath);
-        await downloadImage(originUrl, savePath);
-        console.log("asdfasdf");
-        const fileName = config.base.fileNameFormat
-          ? (await utils.formatName(
-              config.base.fileNameFormat,
-              savePath,
-              false
-            )) + path.extname(savePath)
-          : savePath;
-
-        console.debug(`Uploading ${originUrl}: ${savePath} to ${fileName}.`);
-        const localPath = await upload?.upload(savePath, fileName);
-
-        if (localPath != null) {
-          markdownImages.push({
-            name: item[1],
-            originUrl,
-            savePath,
-            localPath,
-          });
-        }
-      } catch (error) {
-        vscode.window.showErrorMessage(`Download ${originUrl} failed`);
-      }
-    }
+    allTasks.push(
+      handleImage(item[2], item[1], markdownImages, config, upload!)
+    );
   }
+
+  await Promise.all(allTasks);
 
   console.debug(markdownImages);
 
