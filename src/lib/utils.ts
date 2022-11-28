@@ -299,7 +299,7 @@ function getPasteImage(imagePath: string) : Promise<string[]>{
                 // console.debug('exit', code, signal);
             });
             powershell.stdout.on('data', (data) => {
-                data.toString().split('\n').forEach(d => output += (d.indexOf('Active code page:') < 0 ? d + '\n' : ''));
+                data.toString().split('\n').forEach((d: any) => output += (d.indexOf('Active code page:') < 0 ? d + '\n' : ''));
                 clearTimeout(timer);
                 timer = setTimeout(() => powershell.kill(), 2000);
             });

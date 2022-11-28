@@ -18,25 +18,34 @@ function getImageReg() {
 
 async function downloadImage(url: string, filepath: string) {
   return new Promise((resolve, reject) => {
-    https.get(url, (res) => {
-      if (res.statusCode === 200) {
-        res
-          .pipe(fs.createWriteStream(filepath))
-          .on("error", reject)
-          .once("close", () => resolve(filepath));
-      } else {
-        // Consume response data to free up memory
-        res.resume();
-        if (res.statusCode === 302) {
-          const newUrl = res.headers.location;
-          resolve(downloadImage(newUrl!, filepath));
-          return;
+    https.get(
+      url,
+      {
+        headers: {
+          "User-Agent":
+            "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36",
+        },
+      },
+      (res) => {
+        if (res.statusCode === 200) {
+          res
+            .pipe(fs.createWriteStream(filepath))
+            .on("error", reject)
+            .once("close", () => resolve(filepath));
+        } else {
+          // Consume response data to free up memory
+          res.resume();
+          if (res.statusCode === 302) {
+            const newUrl = res.headers.location;
+            resolve(downloadImage(newUrl!, filepath));
+            return;
+          }
+          reject(
+            new Error(`Request Failed With a Status Code: ${res.statusCode}`)
+          );
         }
-        reject(
-          new Error(`Request Failed With a Status Code: ${res.statusCode}`)
-        );
       }
-    });
+    );
   });
 }
 
